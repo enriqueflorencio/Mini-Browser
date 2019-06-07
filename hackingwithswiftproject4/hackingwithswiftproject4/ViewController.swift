@@ -41,7 +41,10 @@ class ViewController: UIViewController, WKNavigationDelegate {
         
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(webView.reload))
-        toolbarItems = [progressButton, spacer, refresh]
+        let goBack = UIBarButtonItem(title: "Back", style: .plain, target: webView, action: #selector(webView.goBack))
+        let goForward = UIBarButtonItem(title: "Forward", style: .plain, target: webView, action: #selector(webView.goForward))
+        
+        toolbarItems = [goBack, progressButton, spacer, refresh, goForward]
         navigationController?.isToolbarHidden = false
         
         //KVO
@@ -89,7 +92,11 @@ class ViewController: UIViewController, WKNavigationDelegate {
             }
         }
         
+        
         decisionHandler(.cancel)
+        let ac = UIAlertController(title: nil, message: "That website is blocked", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(ac, animated: true)
     }
 }
 
